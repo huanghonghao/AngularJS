@@ -259,3 +259,22 @@ document.onclick = function() {
     angular.bootstrap(document, "myApp");
 };
 ```
+
+## 5. 服务
+
+> ### $scope.$apply(function(){})
+
+$apply可以使在源生js代码中使用angular
+
+```javascript
+var myApp = angular.module("myApp", []);
+myApp.controller("Aaa", ["$scope", "$timeout", function($scope, $timeout) {
+    $scope.name = "hello";
+    setTimeout(function(){
+        $scope.$apply(function() {
+            $scope.name = "hi";
+        });
+    }, 2000);
+}]);
+```
+

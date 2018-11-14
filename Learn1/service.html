@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>服务</title>
+    <script src="./js/1.3.6/angular.min.js"></script>
+    <script>
+        var myApp = angular.module("myApp", []);
+        myApp.controller("Aaa", ["$scope", "$timeout", function($scope, $timeout) {
+            $scope.name = "hello";
+            setTimeout(function(){
+                //apply可以使AngularJS能在源生JS里使用
+                $scope.$apply(function() {
+                    $scope.name = "hi";
+                });
+            }, 2000);
+            /*$timeout(function() {
+                $scope.name = "hi";
+            }, 2000);*/
+        }]);
+
+        myApp.run(["$rootScope", function($rootScope) {
+            $rootScope.name2 = "使用run函数绑定全局的作用域到页面, 页面不分controller, $scope在controller等函数中才有";
+        }]);
+    </script>
+</head>
+<body>
+    <div ng-controller="Aaa">
+        {{name}}
+    </div>
+
+    <div>{{name2}}</div>
+</body>
+</html>

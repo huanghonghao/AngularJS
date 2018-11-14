@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>过滤器</title>
+    <script src="./js/1.3.6/angular.min.js"></script>
+    <script>
+        var myApp = angular.module("myApp", []);
+        myApp.controller("Aaa", ["$scope", "$filter", function($scope, $filter) {
+            $scope.value = "485489484536.005";
+            $scope.name = "zhangsan";
+            $scope.people = {"name": "zhangsan", "age": "20"};
+            $scope.array = ["a", "b", "c"];
+            $scope.date = 484984948948;
+            $scope.peoples = [
+                {name: "zhangsan", color: "red", age: 3},
+                {name: "wangwu", color: "blue", age: 1},
+                {name: "lisi", color: "yellow", age: 2},
+                {name: "zhaoliu", color: "green", age: 5}
+            ];
+
+            //使用服务的方式进行过滤
+            $scope.name2 = $filter("uppercase")("wangwu");
+            $scope.number = $filter("number")("43243543.454354",2);
+            $scope.date2 = $filter("date")("214435643553645");
+        }]);
+
+        //自定义过滤器
+        myApp.filter("firstUpper", function() {
+            return function(str,num) {
+                console.log(num);
+                return str.charAt(0).toUpperCase() + str.substring(1);
+            };
+        });
+    </script>
+</head>
+<body>
+    <div ng-controller="Aaa">
+        <p >{{value | currency:"￥"}}</p>
+        <p>{{value | number:1}}</p><!-- 参数0表示保留小数点的位数 -->
+        <p>{{name | uppercase}}</p><!-- 转大写 -->
+        <p>{{people | json }}</p><!-- 格式化成JSON -->
+        <p>{{array | limitTo:2}}</p><!-- 显示数组的前两个元素 -->
+        <p>{{date | date}}</p><!-- 转换成日期 -->
+        <p>{{peoples | orderBy:"color":true}}</p><!-- 根据color你排序 -->
+        <p>{{peoples | filter:"zhangsan":true}}</p><!-- 过滤包含zhangsan的对象，true为全匹配，默认为模糊匹配 -->
+        <p>{{name | limitTo:2 | uppercase}}</p><!-- 显示前两个字符并转成大写 -->
+        <br>
+        <!-- $filter -->
+        <p>{{name2}}</p>
+        <p>{{number}}</p>
+        <p>{{date2}}</p>
+        <br>
+        <!-- 自定义filter -->
+        <p>{{name | firstUpper:2}}</p>
+    </div>
+</body>
+</html>
